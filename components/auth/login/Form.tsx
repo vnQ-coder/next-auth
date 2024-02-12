@@ -22,8 +22,29 @@ const LoginForm = () => {
   });
 
   const handleFormSubmit: SubmitHandler<LoginFormInputs> = useCallback(
-    (data) => {
+    async (data) => {
       console.log(data);
+      try {
+        const response = await fetch(
+          `https://endpoint.freshdesk.com/api/v2/tickets/28/reply`,
+          {
+            body: "We are working on this issue. Will keep you posted.",
+            headers: {
+              Authorization: "Basic " + base64.encode("APIKEY:X"),
+              "Content-Type": "application/json",
+            },
+            method: "POST",
+          }
+        );
+
+        if (response.status >= 400) {
+          return res.status(400).json({
+            error: "There was an error",
+          });
+        }
+
+        return res.status(200).json({ status: "ok" });
+      } catch (err) {}
     },
     []
   );
