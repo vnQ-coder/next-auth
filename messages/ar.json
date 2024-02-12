@@ -1,0 +1,21 @@
+{
+  "auth": {
+    "login": "مرحبًا",
+    "welcome": "مرحباً",
+    "forgot-password": "هل نسيت كلمة السر",
+    "forgot-password?": "هل نسيت كلمة السر",
+    "app-name": "ShuttlePro",
+    "rights-reserved": "كل الحقوق محفوظة",
+    "privacy-policy": "سياسة الخصوصية",
+    "description1": "إلى أ",
+    "description2": "عالم",
+    "description3": "فقط لك!",
+    "description": "سجل الدخول وجرب الفرق",
+    "loginButton": "تسجيل الدخول",
+    "forget-description-h1": "ضائع",
+    "forget-description-h2": "مفاتيح",
+    "forget-description1-h1": "إلى مملكتك الرقمية؟",
+    "forget-description2-h2": "فتح بسهولة من خلال استعادة كلمة المرور",
+    "forgot-password-desc": "يرجى تقديم عنوان البريد الإلكتروني المرتبط بحسابك لإعادة تعيين كلمة المرور"
+  }
+}

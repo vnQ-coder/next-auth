@@ -1,0 +1,22 @@
+{
+  "auth": {
+    "login": "Hello!",
+    "welcome": "Welcome to ShuttlePro",
+    "forgot-password": "Forgot Password",
+    "forgot-password?": "Forgot Password?",
+    "app-name": "ShuttlePro",
+    "rights-reserved": "All Rights Reserved",
+    "privacy-policy": "Privacy Policy",
+    "description1": "to a",
+    "description2": "world",
+    "description3": "just for you!",
+    "description": "Login and experience the difference",
+    "loginButton": "Login",
+    "forget-description-h1": "Lost",
+    "forget-description-h2": "Keys",
+    "forget-description1-h1": "to your digital kingdom?",
+    "forget-description2-h2": "Unlock with ease through password recovery",
+    "forgot-password-desc": "Please provide the email address associated with your account for password reset",
+    "send-email": "Send Email"
+  }
+}
