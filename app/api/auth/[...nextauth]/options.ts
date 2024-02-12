@@ -19,15 +19,15 @@ export type CustomUser = {
 };
 
 export const authOptions: AuthOptions = {
-  //   pages: {
-  //     signIn: "/en/login",
-  //   },
+  pages: {
+    signIn: "/en/login",
+  },
   callbacks: {
     async signIn({ user }: any) {
       dbConnection();
       try {
         const findUser = await UserModel.findOne({ email: user.email }).select(
-          "firstName lastName email"
+          "id firstName lastName email"
         );
         if (findUser) {
           return true;
@@ -61,7 +61,7 @@ export const authOptions: AuthOptions = {
   },
   providers: [
     Credentials({
-      name: "Welcome Back",
+      name: "Welcome Backs",
       type: "credentials",
       credentials: {
         email: {
@@ -72,10 +72,11 @@ export const authOptions: AuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req) {
-        console.log(credentials, "credentials");
         // * Connect to the MongoDb
         dbConnection();
-        const user = await UserModel.findOne({ email: credentials?.email });
+        const user = await UserModel.findOne({
+          email: credentials?.email,
+        }).select("id firstName lastName email");
         if (user) {
           return user;
         } else {
