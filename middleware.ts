@@ -12,7 +12,3 @@ export default createMiddleware({
 export const config = {
   matcher: ["/", "/(en|ar)/:path*"],
 };
-
-export async function middleware(req: any) {
-  return NextResponse.next();
-}
