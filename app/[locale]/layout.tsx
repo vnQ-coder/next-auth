@@ -1,6 +1,7 @@
 import "../globals.css";
 import { NextIntlClientProvider, useMessages } from "next-intl";
 import { redirect } from "next/navigation";
+import NextAuthSessionProvider from "./providers/sessionProviders";
 
 export const metadata = {
   title: "Shuttlepro",
@@ -27,7 +28,9 @@ export default function RootLayout({
   return (
     <html lang={locale}>
       <NextIntlClientProvider locale={locale} messages={messages}>
-        <body>{children}</body>
+        <NextAuthSessionProvider>
+          <body>{children}</body>
+        </NextAuthSessionProvider>
       </NextIntlClientProvider>
     </html>
   );

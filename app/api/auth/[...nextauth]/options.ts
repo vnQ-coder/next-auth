@@ -11,21 +11,22 @@ export type CustomSession = {
 
 export type CustomUser = {
   id?: string | null;
-  name?: string | null;
+  firstName?: string | null;
+  lastName?: string | null;
   email?: string | null;
   role?: string | null;
   avatar?: string | null;
 };
 
 export const authOptions: AuthOptions = {
-  pages: {
-    signIn: "/en/login",
-  },
+  //   pages: {
+  //     signIn: "/en/login",
+  //   },
   callbacks: {
-    async signIn({ body }: any) {
+    async signIn({ user }: any) {
       dbConnection();
       try {
-        const findUser = await UserModel.findOne({ email: body.email }).select(
+        const findUser = await UserModel.findOne({ email: user.email }).select(
           "firstName lastName email"
         );
         if (findUser) {
@@ -71,6 +72,7 @@ export const authOptions: AuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req) {
+        console.log(credentials, "credentials");
         // * Connect to the MongoDb
         dbConnection();
         const user = await UserModel.findOne({ email: credentials?.email });

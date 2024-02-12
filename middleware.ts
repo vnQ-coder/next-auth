@@ -10,21 +10,30 @@ export default createMiddleware({
   defaultLocale: "en",
 });
 
-// export const config = {
-//   matcher: ["/", "/(en|ar)/:path*"],
-// };
+export const config = {
+  matcher: [
+    "/",
+    // "/api/:path*", // Match API routes
+    "/:lang(en|ar)/:path*", // Match language-specific routes
+  ],
+};
 
-export async function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl;
-  // if (pathname == "/login" || pathname == "/admin/login") {
-  //   return NextResponse.next();
-  // }
-  try {
-    const token = await getToken({ req: request });
-    console.log(token, "token");
-  } catch (err) {
-    console.log(err);
-  }
+// export async function middleware(request: NextRequest) {
+//   const { pathname } = request.nextUrl;
+//   console.log(pathname, "pathname");
 
-  return NextResponse.next();
-}
+//   // Extract language parameter from URL
+//   const match = pathname.match(/^\/(en|ar)(\/.*)?/);
+//   const lang = match ? match[1] : "en";
+
+//   // You can use the 'lang' variable to determine the language and perform actions accordingly
+
+//   // For example, if you want to skip middleware for API routes:
+//   if (pathname.startsWith(`/${lang}/api/`)) {
+//     return NextResponse.next();
+//   }
+
+//   // Your authentication logic with getToken can go here
+
+//   return NextResponse.next();
+// }
