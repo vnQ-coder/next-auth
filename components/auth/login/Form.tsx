@@ -8,7 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { schema } from "./helper";
 import FormBody from "./FormBody";
 import Button from "../../shared/Inputs/Button";
-import { signIn} from "next-auth/react";
+import { signIn } from "next-auth/react";
 
 type LoginFormInputs = z.infer<typeof schema>;
 
@@ -36,13 +36,16 @@ const LoginForm = () => {
         if (response.status === 200) {
           // Handle successful response
           const responseData = await response.json();
-          console.log(responseData, "response data");
-          signIn("credentials", {
-            email: data.email,
-            password: data.password,
-            callbackUrl: "/en/workspaces",
-            redirect: true,
-          });
+          if (responseData.code === 200) {
+            signIn("credentials", {
+              email: data.email,
+              password: data.password,
+              callbackUrl: "/en/workspaces",
+              redirect: true,
+            });
+          } else {
+            console.log(responseData, "response data");
+          }
         } else {
           // Handle error response
           const errorData = await response.json();

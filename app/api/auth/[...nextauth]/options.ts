@@ -77,6 +77,7 @@ export const authOptions: AuthOptions = {
         const user = await UserModel.findOne({
           email: credentials?.email,
         }).select("id firstName lastName email");
+        console.log(user, "user");
         if (user) {
           return user;
         } else {

@@ -3,6 +3,7 @@ import createIntlMiddleware from "next-intl/middleware";
 import { NextRequest } from "next/server";
 
 const locales = ["en", "ar"];
+const publicPages = ["/login", "/forgotPassword"];
 
 const intlMiddleware = createIntlMiddleware({
   locales,
@@ -10,18 +11,17 @@ const intlMiddleware = createIntlMiddleware({
 });
 
 const authMiddleware = withAuth(
-  // Note that this callback is only invoked if
-  // the `authorized` callback has returned `true`
-  // and not for pages listed in `pages`.
   function onSuccess(req) {
     return intlMiddleware(req);
   },
   {
     callbacks: {
       authorized: (obj) => {
-        console.log(obj, "dsds");
         return obj?.token != null;
       },
+    },
+    pages: {
+      signIn: "/en/login",
     },
   }
 );
@@ -32,7 +32,6 @@ export default function middleware(req: NextRequest) {
   if (isPublicPage) {
     return intlMiddleware(req);
   } else {
-    console.log("auth");
     return (authMiddleware as any)(req);
   }
 }
