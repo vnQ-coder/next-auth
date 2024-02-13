@@ -20,7 +20,7 @@ export type CustomUser = {
 
 export const authOptions: AuthOptions = {
   pages: {
-    signIn: "/en/login",
+    signIn: "/:lang(en|ar)/login",
   },
   callbacks: {
     async signIn({ user }: any) {
