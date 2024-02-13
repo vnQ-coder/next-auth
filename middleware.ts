@@ -1,7 +1,6 @@
 import { getToken } from "next-auth/jwt";
 import createMiddleware from "next-intl/middleware";
 import { NextRequest, NextResponse } from "next/server";
-
 export default createMiddleware({
   // A list of all locales that are supported
   locales: ["en", "ar"],
@@ -17,7 +16,6 @@ export const config = {
     "/:lang(en|ar)/:path*", // Match language-specific routes
   ],
 };
-
 // export async function middleware(request: NextRequest) {
 //   const { pathname } = request.nextUrl;
 //   console.log(pathname, "pathname");
