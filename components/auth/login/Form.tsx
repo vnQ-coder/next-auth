@@ -8,7 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { schema } from "./helper";
 import FormBody from "./FormBody";
 import Button from "../../shared/Inputs/Button";
-import { signIn } from "next-auth/react";
+import { signIn} from "next-auth/react";
 
 type LoginFormInputs = z.infer<typeof schema>;
 
@@ -21,7 +21,6 @@ const LoginForm = () => {
   } = useForm<LoginFormInputs>({
     resolver: zodResolver(schema),
   });
-
   const handleFormSubmit: SubmitHandler<LoginFormInputs> = useCallback(
     async (data) => {
       console.log(data);
