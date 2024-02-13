@@ -1,7 +1,7 @@
-import Login from "../../../../components/auth/login";
+import Login from "@/components/auth/login";
 
-function LoginPage() {
-  return <Login />;
+function LoginPage(params: any) {
+  return <Login params={params} />;
 }
 
 export default LoginPage;

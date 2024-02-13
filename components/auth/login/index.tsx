@@ -5,7 +5,13 @@ import Layout from "../layout";
 import RightContent from "../shared/RightBar";
 import RedirectButton from "../shared/RedirectButton";
 
-const Login = () => {
+type LoginProps = {
+  params: {
+    params: { locale: string };
+  };
+};
+
+const Login = ({ params }: LoginProps) => {
   const t = useTranslations("auth");
   return (
     <Layout
@@ -20,7 +26,7 @@ const Login = () => {
       }
     >
       <LeftContent title={t("login")} description={t("welcome")} />
-      <Form />
+      <Form locale={params?.params?.locale} />
       <RedirectButton href={`forgotPassword`} text="forgot-password?" />
     </Layout>
   );

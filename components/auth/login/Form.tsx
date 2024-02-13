@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useTranslations } from "next-intl";
 import { z } from "zod";
@@ -9,11 +9,15 @@ import { schema } from "./helper";
 import FormBody from "./FormBody";
 import Button from "../../shared/Inputs/Button";
 import { signIn } from "next-auth/react";
+import { postRequestBody, sendRequest } from "@/utils";
+import LoadingSpinner from "@/components/shared/Spinner";
 
 type LoginFormInputs = z.infer<typeof schema>;
 
-const LoginForm = () => {
+const LoginForm = ({ locale }: { locale: string }) => {
   const t = useTranslations("auth");
+  const [loading, setLoading] = useState(false);
+
   const {
     handleSubmit,
     control,
@@ -21,39 +25,20 @@ const LoginForm = () => {
   } = useForm<LoginFormInputs>({
     resolver: zodResolver(schema),
   });
+
   const handleFormSubmit: SubmitHandler<LoginFormInputs> = useCallback(
     async (data) => {
-      console.log(data);
-      try {
-        const response = await fetch(`http://localhost:3000/api/auth/login`, {
-          body: JSON.stringify(data), // Convert data to JSON string
-          headers: {
-            "Content-Type": "application/json",
-          },
-          method: "POST",
+      setLoading(true);
+      const response = await sendRequest(`auth/login`, postRequestBody(data));
+      if (response) {
+        signIn("credentials", {
+          email: data.email,
+          password: data.password,
+          callbackUrl: `/${locale}/workspaces`,
+          redirect: true,
         });
-
-        if (response.status === 200) {
-          // Handle successful response
-          const responseData = await response.json();
-          if (responseData.code === 200) {
-            signIn("credentials", {
-              email: data.email,
-              password: data.password,
-              callbackUrl: "/en/workspaces",
-              redirect: true,
-            });
-          } else {
-            console.log(responseData, "response data");
-          }
-        } else {
-          // Handle error response
-          const errorData = await response.json();
-          console.error(errorData, "error data");
-        }
-      } catch (err) {
-        console.error(err, "error");
       }
+      setLoading(false);
     },
     []
   );
@@ -67,9 +52,9 @@ const LoginForm = () => {
           disabled={false}
           textColor="text-fontLightPrimary"
           type={"submit"}
-          className="w-full"
+          className="w-full rounded-lg"
         >
-          {t("loginButton")}
+          {loading ? <LoadingSpinner color={"#fafafe"} /> : t("loginButton")}
         </Button>
       </div>
     </form>

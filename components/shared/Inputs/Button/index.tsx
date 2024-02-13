@@ -34,7 +34,7 @@ const Button: React.FC<ButtonProps> = ({
       onClick={onClick}
       className={`p-2 flex items-center justify-center hover:opacity-70 ${height} ${
         disabled ? "opacity-70" : ""
-      } rounded-${rounded} text-${font} font-${fontWeight} ${textColor} ${bgColor} ${className}`}
+      } text-${font} font-${fontWeight} ${textColor} ${bgColor} rounded-${rounded} ${className}`}
     >
       {children}
     </button>

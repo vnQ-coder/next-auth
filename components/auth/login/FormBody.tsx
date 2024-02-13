@@ -12,7 +12,7 @@ const FormBody = ({ errors, control }: any) => {
           render={({ field }) => (
             <TextField
               {...field}
-              label="Email"
+              label="Email*"
               type="email"
               fullWidth
               error={!!errors.email}
@@ -29,7 +29,7 @@ const FormBody = ({ errors, control }: any) => {
           render={({ field }) => (
             <TextField
               {...field}
-              label="Password"
+              label="Password*"
               type="password"
               fullWidth
               error={!!errors.password}

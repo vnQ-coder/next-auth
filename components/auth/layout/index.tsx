@@ -1,4 +1,5 @@
 import Footer from "../shared/Footer";
+import { Toaster } from "react-hot-toast";
 
 export default function Layout({
   children,
@@ -9,6 +10,7 @@ export default function Layout({
 }) {
   return (
     <div className="grid grid-cols-5">
+      <Toaster />
       <div className="col-span-5 md:col-span-2 bg-primary background-line-wrapper relative">
         <div className="flex flex-col items-center justify-center min-h-screen">
           <div className="flex items-center justify-center md:w-1/2 !w-[317px]">
