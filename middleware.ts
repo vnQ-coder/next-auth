@@ -1,22 +1,3 @@
-// import createMiddleware from "next-intl/middleware";
-// import { NextApiRequest, NextApiResponse } from "next";
-// import { getSession } from "next-auth/react";
-
-// export default createMiddleware({
-//   locales: ["en", "ar"],
-//   defaultLocale: "en",
-// });
-
-// export const config = {
-//   matcher: ["/", "/:lang(en|ar)/:path*"],
-// };
-
-// export async function middleware(req: NextApiRequest, res: NextApiResponse) {
-//   const session = await getSession({ req });
-//   console.log(session, "session");
-//   return;
-// }
-
 import { withAuth } from "next-auth/middleware";
 import createIntlMiddleware from "next-intl/middleware";
 import { NextRequest } from "next/server";
