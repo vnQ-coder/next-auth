@@ -1,37 +1,61 @@
-import { getToken } from "next-auth/jwt";
-import createMiddleware from "next-intl/middleware";
-import { NextRequest, NextResponse } from "next/server";
-export default createMiddleware({
-  // A list of all locales that are supported
-  locales: ["en", "ar"],
+// import createMiddleware from "next-intl/middleware";
+// import { NextApiRequest, NextApiResponse } from "next";
+// import { getSession } from "next-auth/react";
 
-  // Used when no locale matches
+// export default createMiddleware({
+//   locales: ["en", "ar"],
+//   defaultLocale: "en",
+// });
+
+// export const config = {
+//   matcher: ["/", "/:lang(en|ar)/:path*"],
+// };
+
+// export async function middleware(req: NextApiRequest, res: NextApiResponse) {
+//   const session = await getSession({ req });
+//   console.log(session, "session");
+//   return;
+// }
+
+import { withAuth } from "next-auth/middleware";
+import createIntlMiddleware from "next-intl/middleware";
+import { NextRequest } from "next/server";
+
+const locales = ["en", "ar"];
+
+const intlMiddleware = createIntlMiddleware({
+  locales,
   defaultLocale: "en",
 });
 
+const authMiddleware = withAuth(
+  // Note that this callback is only invoked if
+  // the `authorized` callback has returned `true`
+  // and not for pages listed in `pages`.
+  function onSuccess(req) {
+    return intlMiddleware(req);
+  },
+  {
+    callbacks: {
+      authorized: (obj) => {
+        console.log(obj, "dsds");
+        return obj?.token != null;
+      },
+    },
+  }
+);
+
+export default function middleware(req: NextRequest) {
+  console.log(req.nextUrl.pathname, "req.nextUrl.pathname");
+  const isPublicPage = req.nextUrl.pathname.includes("/login");
+  if (isPublicPage) {
+    return intlMiddleware(req);
+  } else {
+    console.log("auth");
+    return (authMiddleware as any)(req);
+  }
+}
+
 export const config = {
-  matcher: [
-    "/",
-    // "/api/:path*", // Match API routes
-    "/:lang(en|ar)/:path*", // Match language-specific routes
-  ],
+  matcher: ["/((?!api|_next|.*\\..*).*)"],
 };
-// export async function middleware(request: NextRequest) {
-//   const { pathname } = request.nextUrl;
-//   console.log(pathname, "pathname");
-
-//   // Extract language parameter from URL
-//   const match = pathname.match(/^\/(en|ar)(\/.*)?/);
-//   const lang = match ? match[1] : "en";
-
-//   // You can use the 'lang' variable to determine the language and perform actions accordingly
-
-//   // For example, if you want to skip middleware for API routes:
-//   if (pathname.startsWith(`/${lang}/api/`)) {
-//     return NextResponse.next();
-//   }
-
-//   // Your authentication logic with getToken can go here
-
-//   return NextResponse.next();
-// }
