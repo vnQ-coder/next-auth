@@ -2,13 +2,13 @@ import toast from "react-hot-toast";
 
 const serverUrl = `${process.env.NEXT_PUBLIC_APP_URL}/api/`;
 
-export const sendRequest = async (url = "auth/login", config = {}) => {
+export const sendRequest = async (url = "", config = {}) => {
   try {
-    const response = await fetch(serverUrl + url, config);
+    let response = await fetch(serverUrl + url, config);
     if (response.status === 200) {
       const responseData = await response.json();
       if (responseData.code === 200) {
-        return true;
+        return responseData.data ? responseData.data : true;
       } else {
         toast.error(responseData.message);
         return false;

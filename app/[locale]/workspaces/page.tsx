@@ -1,30 +1,19 @@
-"use client";
+import { authOptions } from "@/app/api/auth/[...nextauth]/options";
+import Header from "@/components/shared/Header";
+import { getUser } from "@/libs/actions/workspaces";
+import { getServerSession } from "next-auth";
 
-import { useSession } from "next-auth/react";
-import { signOut } from "next-auth/react";
-import { redirect } from "next/navigation";
-function Workspaces() {
-  const { data, status } = useSession();
-  if (status === "loading") {
-    return <div>Loading...</div>;
-  }
-  if (!data) {
-    redirect("/en/login");
+export default async function Workspaces() {
+  const session: any = await getServerSession(authOptions);
+  let data = null;
+  if (session) {
+    data = await getUser(session?.user?.id);
   }
   return (
-    <div>
+    <div className="">
       Workspaces
-      {data && (
-        <button
-          onClick={() =>
-            signOut({ callbackUrl: "http://localhost:3000/en/login" })
-          }
-        >
-          Logout
-        </button>
-      )}
+      {data && <div>Name: {data.firstName + " " + data.lastName}</div>}
+      <Header />
     </div>
   );
 }
-
-export default Workspaces;

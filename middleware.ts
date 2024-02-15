@@ -3,7 +3,14 @@ import createIntlMiddleware from "next-intl/middleware";
 import { NextRequest } from "next/server";
 
 const locales = ["en", "ar"];
-const publicPages = ["/login", "/forgotPassword"];
+
+let publicPages: string[] = [];
+
+for (let i = 0; i < locales.length; i++) {
+  publicPages.push(`/${locales[i]}/login`);
+  publicPages.push(`/${locales[i]}/forgotPassword`);
+  publicPages.push(`/${locales[i]}/privacyPolicy`);
+}
 
 const intlMiddleware = createIntlMiddleware({
   locales,
@@ -11,31 +18,35 @@ const intlMiddleware = createIntlMiddleware({
 });
 
 const authMiddleware = withAuth(
-  function onSuccess(req) {
+  function middlware(req) {
     return intlMiddleware(req);
   },
   {
+    pages: {
+      signIn: "/en/login",
+    },
     callbacks: {
       authorized: (obj) => {
         return obj?.token != null;
       },
     },
-    pages: {
-      signIn: "/en/login",
-    },
   }
 );
 
-export default function middleware(req: NextRequest) {
-  console.log(req.nextUrl.pathname, "req.nextUrl.pathname");
-  const isPublicPage = req.nextUrl.pathname.includes("/login");
+export default async function middleware(req: NextRequest) {
+  const isPublicPage = publicPages.includes(req.nextUrl.pathname);
   if (isPublicPage) {
     return intlMiddleware(req);
   } else {
-    return (authMiddleware as any)(req);
+    if (req.nextUrl.pathname.startsWith("/api")) {
+      console.log("API route:", req.nextUrl.pathname);
+    } else {
+      console.log("UI route:", req.nextUrl.pathname);
+      return (authMiddleware as any)(req);
+    }
   }
 }
 
 export const config = {
-  matcher: ["/((?!api|_next|.*\\..*).*)"],
+  matcher: ["/((?!_next|.*\\..*|/api.*).*)"],
 };
