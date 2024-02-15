@@ -14,6 +14,7 @@ interface UserDocument extends mongoose.Document {
   suspended: boolean;
   isDeleted: boolean;
   isVerified: boolean;
+  isAdmin: boolean;
   isMember: boolean;
   loginCount: number;
   userLoginType: {
@@ -48,6 +49,7 @@ const UserSchema = new Schema<UserDocument>(
       web: { type: Boolean, default: false },
       mobile: { type: Boolean, default: false },
     },
+    isAdmin: { type: Boolean, default: false },
     role: { type: String, default: "" },
     createdBy: {
       type: Schema.Types.ObjectId,

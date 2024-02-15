@@ -4,15 +4,20 @@ import Button from "../Inputs/Button";
 
 function Header() {
   return (
-    <Button
-      onClick={() => signOut({ callbackUrl: "http://localhost:3000/en/login" })}
-      disabled={false}
-      textColor="text-fontLightPrimary"
-      type={"submit"}
-      className="w-full rounded-lg"
-    >
-      Logout
-    </Button>
+    <header className={`z-0 py-4 main-header top-header`}>
+      headers
+      {/* <Button
+        onClick={() =>
+          signOut({ callbackUrl: "http://localhost:3000/en/login" })
+        }
+        disabled={false}
+        textColor="text-fontLightPrimary"
+        type={"submit"}
+        className="w-full rounded-lg"
+      >
+        Logout
+      </Button> */}
+    </header>
   );
 }
 

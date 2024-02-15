@@ -1,4 +1,5 @@
 import toast from "react-hot-toast";
+import { randomBytes } from "crypto";
 
 const serverUrl = `${process.env.NEXT_PUBLIC_APP_URL}/api/`;
 
@@ -32,4 +33,17 @@ export const postRequestBody = (data: any) => {
     },
     method: "POST",
   };
+};
+
+export const generatePassword = (length: number): string => {
+  const characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_-+=<>?";
+  const charactersLength = characters.length;
+  const randomBytesBuffer = randomBytes(length);
+  let password = "";
+  for (let i = 0; i < length; i++) {
+    const randomIndex = randomBytesBuffer.readUInt8(i) % charactersLength;
+    password += characters.charAt(randomIndex);
+  }
+  return password;
 };
