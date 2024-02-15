@@ -1,8 +1,11 @@
 import * as mongoose from "mongoose";
+const { Schema, model } = mongoose;
 import crypto from "crypto";
 
-const { Schema, model } = mongoose;
-
+type User = {
+  type: mongoose.Schema.Types.ObjectId;
+  ref: string;
+};
 interface UserDocument extends mongoose.Document {
   firstName: string;
   lastName: string;
@@ -22,8 +25,8 @@ interface UserDocument extends mongoose.Document {
     mobile: boolean;
   };
   role: string;
-  createdBy: mongoose.Types.ObjectId;
-  updatedBy: mongoose.Types.ObjectId;
+  createdBy: User;
+  updatedBy: User;
   setPassword(password: string): void;
   validatePassword(password: string): boolean;
 }
