@@ -15,30 +15,22 @@ export type CustomUser = {
   lastName?: string | null;
   email?: string | null;
   role?: string | null;
-  avatar?: string | null;
+  picture?: string | null;
+  type?: string | null;
+  isVerified?: boolean | null;
+  isMember?: boolean | null;
+  suspended?: boolean | null;
 };
 
 export const authOptions: AuthOptions = {
   pages: {
-    signIn: "/:lang(en|ar)/login",
+    signIn: "/en/login",
+  },
+  session: { maxAge: 1440 },
+  jwt: {
+    maxAge: 1440,
   },
   callbacks: {
-    async signIn({ user }: any) {
-      dbConnection();
-      try {
-        const findUser = await UserModel.findOne({ email: user.email }).select(
-          "id firstName lastName email"
-        );
-        if (findUser) {
-          return true;
-        } else {
-          return false;
-        }
-      } catch (error) {
-        console.log("The error is ", error);
-        return false;
-      }
-    },
     async jwt({ token, user }: { token: JWT; user: CustomUser }) {
       if (user) {
         user.role = user?.role == null ? "User" : user?.role;
@@ -61,7 +53,7 @@ export const authOptions: AuthOptions = {
   },
   providers: [
     Credentials({
-      name: "Welcome Backs",
+      name: "",
       type: "credentials",
       credentials: {
         email: {
@@ -71,16 +63,15 @@ export const authOptions: AuthOptions = {
         },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials, req) {
-        // * Connect to the MongoDb
-        dbConnection();
-        const user = await UserModel.findOne({
-          email: credentials?.email,
-        }).select("id firstName lastName email");
-        console.log(user, "user");
-        if (user) {
-          return user;
-        } else {
+      async authorize(credentials) {
+        try {
+          dbConnection();
+          const user = await UserModel.findOne({
+            email: credentials?.email,
+          });
+          return user ? user.toProfile() : null;
+        } catch (error) {
+          console.error("Error during authorization:", error);
           return null;
         }
       },

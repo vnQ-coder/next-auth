@@ -75,6 +75,21 @@ UserSchema.methods.validatePassword = function (password: string) {
   return this.password === hash;
 };
 
+UserSchema.methods.toProfile = function () {
+  return {
+    id: this._id,
+    type: this.type,
+    email: this.email,
+    firstName: this.firstName,
+    lastName: this.lastName,
+    picture: this.picture,
+    isVerified: this.isVerified,
+    role: this.role,
+    isMember: this.isMember,
+    suspended: this.suspended,
+  };
+};
+
 const User = mongoose.models.User || model<UserDocument>("User", UserSchema);
 
 export default User;
