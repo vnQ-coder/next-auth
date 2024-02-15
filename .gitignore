@@ -33,6 +33,7 @@ package-lock.json
 # vercel
 .vercel
 
+public
 # typescript
 *.tsbuildinfo
 next-env.d.ts
