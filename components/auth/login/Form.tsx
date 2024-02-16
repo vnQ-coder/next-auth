@@ -9,8 +9,9 @@ import { schema } from "./helper";
 import FormBody from "./FormBody";
 import Button from "../../shared/Inputs/Button";
 import { signIn } from "next-auth/react";
-import { postRequestBody, sendRequest } from "@/utils";
 import LoadingSpinner from "@/components/shared/Spinner";
+import { login } from "@/libs/actions/auth";
+import { toast } from "react-hot-toast";
 
 type LoginFormInputs = z.infer<typeof schema>;
 
@@ -29,14 +30,16 @@ const LoginForm = ({ locale }: { locale: string }) => {
   const handleFormSubmit: SubmitHandler<LoginFormInputs> = useCallback(
     async (data) => {
       setLoading(true);
-      const response = await sendRequest(`auth/login`, postRequestBody(data));
-      if (response) {
+      const response = await login(data);
+      if (response && response.code === 200) {
         signIn("credentials", {
           email: data.email,
           password: data.password,
           callbackUrl: `/${locale}/workspaces`,
           redirect: true,
         });
+      } else {
+        toast.error(response.message);
       }
       setLoading(false);
     },
@@ -44,7 +47,7 @@ const LoginForm = ({ locale }: { locale: string }) => {
   );
 
   return (
-    <form autoComplete="off">
+    <form autoComplete="off" action="">
       <FormBody errors={errors} control={control} />
       <div className="text-center text-white pt-2">
         <Button

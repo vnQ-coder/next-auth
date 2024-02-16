@@ -1,4 +1,5 @@
 import Header from "@/components/shared/Header";
+import { Toaster } from "react-hot-toast";
 
 export default function AdminLayout({
   children,
@@ -7,6 +8,7 @@ export default function AdminLayout({
 }) {
   return (
     <section>
+      <Toaster />
       <Header />
       {children}
     </section>

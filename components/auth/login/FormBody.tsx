@@ -1,5 +1,6 @@
 import TextField from "../../shared/Inputs/TextField";
 import { Controller } from "react-hook-form";
+import { Input } from "@material-tailwind/react";
 
 const FormBody = ({ errors, control }: any) => {
   return (
@@ -10,16 +11,19 @@ const FormBody = ({ errors, control }: any) => {
           control={control}
           defaultValue=""
           render={({ field }) => (
-            <TextField
+            <Input
               {...field}
               label="Email*"
               type="email"
-              fullWidth
-              error={!!errors.email}
-              helperText={errors.email?.message}
+              size="lg"
+              placeholder={"Email"}
+              crossOrigin={""}
             />
           )}
         />
+        <span className="text-[10px] text-red-500">
+          {errors.email && errors.email?.message}
+        </span>
       </div>
       <div className="mb-4">
         <Controller
@@ -27,16 +31,19 @@ const FormBody = ({ errors, control }: any) => {
           control={control}
           defaultValue=""
           render={({ field }) => (
-            <TextField
+            <Input
               {...field}
               label="Password*"
               type="password"
-              fullWidth
-              error={!!errors.password}
-              helperText={errors.password?.message}
+              size="lg"
+              placeholder={"Password"}
+              crossOrigin={""}
             />
           )}
         />
+        <span className="text-[10px] text-red-500">
+          {errors.password && errors.password?.message}
+        </span>
       </div>
     </>
   );
