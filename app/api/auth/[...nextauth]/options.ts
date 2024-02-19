@@ -33,7 +33,7 @@ export const authOptions: AuthOptions = {
   callbacks: {
     async jwt({ token, user }: { token: JWT; user: CustomUser }) {
       if (user) {
-        user.role = user?.role == null ? "User" : user?.role;
+        user.role = user?.role == null ? "Admin" : user?.role;
         token.user = user;
       }
       return token;
