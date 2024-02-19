@@ -1,11 +1,8 @@
-import { Card } from "@/components/ui/card";
+"use client";
+
+import CustomTable from "@/components/shared/CustomTable";
 import { columns } from "./columns";
-import { DataTable } from "./data-table";
 
 export default function Main({ data }: any) {
-  return (
-    <Card className="w-full h-[calc(100vh-120px)]">
-      <DataTable columns={columns} data={data} />
-    </Card>
-  );
+  return <CustomTable data={data} columns={columns} />;
 }

@@ -6,9 +6,9 @@ import { UserBody } from "../types/user";
 dbConnection();
 
 export const getUsers = async () => {
-  const data = await User.find({}).select(
-    "id firstName lastName email picture"
-  );
+  const data = await User.find({
+    role: { $nin: ["super"] },
+  }).select("id firstName lastName email picture");
   return data.map((d) => {
     return {
       id: d.id,
