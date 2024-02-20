@@ -14,8 +14,21 @@ export const OKResponse = (data: any) => ({
   message: "Ok",
   data,
 });
-
 export const AlreadyExistsResponse = () => ({
   code: 400,
-  message: "Data already Exists.",
+  message: "Data Already Exists",
+});
+export const FailedToUploadResponse = () => ({
+  code: 400,
+  message: "Failed to Upload",
+});
+export const FailedToCreateResponse = () => ({
+  code: 400,
+  message: "Failed to Create",
+});
+
+export const CreatedResponse = (data: any) => ({
+  code: 201,
+  data,
+  message: "Created",
 });
