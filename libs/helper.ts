@@ -1,12 +1,14 @@
 export const NotFoundResponse = () => ({
   code: 404,
-  message: "not found",
+  message: "Data Not found.",
   data: [],
 });
+
 export const InternalServerErrorResponse = () => ({
   code: 500,
-  message: "Internal Server Error",
+  message: "Internal Server Error.",
 });
+
 export const OKResponse = (data: any) => ({
   code: 200,
   message: "Ok",
@@ -14,7 +16,7 @@ export const OKResponse = (data: any) => ({
 });
 export const AlreadyExistsResponse = () => ({
   code: 400,
-  message: "Already Exists",
+  message: "Data Already Exists",
 });
 export const FailedToUploadResponse = () => ({
   code: 400,

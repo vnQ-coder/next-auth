@@ -1,7 +1,7 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
-import Header from "@/components/shared/Header";
-import { getUser } from "@/libs/actions/workspaces";
+import { getUser } from "@/libs/actions/users";
 import { getServerSession } from "next-auth";
+import Main from "./main";
 
 export default async function Workspaces() {
   const session: any = await getServerSession(authOptions);
@@ -9,11 +9,5 @@ export default async function Workspaces() {
   if (session) {
     data = await getUser(session?.user?.id);
   }
-  return (
-    <div className="">
-      Workspaces
-      {data && <div>Name: {data.firstName + " " + data.lastName}</div>}
-      <Header />
-    </div>
-  );
+  return <Main />;
 }

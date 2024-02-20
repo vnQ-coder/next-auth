@@ -1,74 +1,80 @@
-import type { Config } from "tailwindcss";
+import type { Config } from "tailwindcss"
 
-const config: Config = {
+const config = {
+  darkMode: ["class"],
   content: [
-    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
-  ],
+    './pages/**/*.{ts,tsx}',
+    './components/**/*.{ts,tsx}',
+    './app/**/*.{ts,tsx}',
+    './src/**/*.{ts,tsx}',
+	],
+  prefix: "",
   theme: {
+    container: {
+      center: true,
+      padding: "2rem",
+      screens: {
+        "2xl": "1400px",
+      },
+    },
     extend: {
       colors: {
-        primary: "var(--color-primary)",
-        secondary: "var(--color-secondary)",
-        fontSecondary: "var(--color-font-secondary)",
-        fontLightPrimary: "var(--color-font-light-primary)",
-        fontBasePrimary: "var(--color-font-base-primary)",
-        fontPrimary: "var(--color-font-primary)",
-        fontPlaceholder: "var(--color-font-placeholder)",
-        basePrimary: "var(--color-base-primary)",
-        fontBorder: "var(--color-font-input-border)",
-        fontDanger: "var(--color-font-danger)",
-        fontSuccess: "var(--color-font-success)",
-        fontInputLabel: "var(--color-font-input-label)",
-        textLight: "var(--color-text-light)",
-        deleteBin: "var(--color-font-danger-bin)",
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+        },
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+        },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
+        },
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
       },
-      backgroundColor: {
-        primary: "var(--color-primary)",
-        "primary-10": "var(--color-font-primary-10)",
-        secondary: "var(--color-secondary)",
-        borderPrimary: "var(--color-border-primary)",
-        fontPrimary: "var(--color-font-primary)",
-        basePrimary: "var(--color-base-primary)",
-        danger: "var(--color-font-danger)",
-        dangerLight: "var(--color-font-danger-light)",
-        successLight: "var(--color-font-success-light)",
-        primaryGradiantStart: "var(--color-primary-gradiant-start)",
-        dashboardInprogressCard: "var(--color-dashboard-inprogress-card)",
-        dashboardCriticalCard: "var(--color-dashboard-critical-card)",
-        dashboardReturnCard: "var(--color-dashboard-return-card)",
-        dashboardTabsCard: "var(--color-dashboard-tabs-card)",
-        dashboardPaymentCard: "var(--color-dashboard-payment-card)",
-        dashboardTodayCard: "var(--color-dashboard-today-card)",
-        dashboardActivitiesCard: "var(--color-dashboard-activities-card)",
-        fontSecondaryInput: "var(--color-font-secondary-input)",
-        cardHoverBackground: "var(--color-card-hover-bg)",
-        chip: "var(--color-table-header)",
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
       },
-      borderColor: {
-        themePrimary: "var(--color-font-primary)",
-        primary: "var(--color-border-primary)",
-        secondary: "var(--color-border-secondary)",
-        table: "var(--color-border-table)",
-        lightPrimary: "var(--color-border-primary-half-opacity)",
+      keyframes: {
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
       },
-      screens: {
-        "3xl": "1770px",
-      },
-      fontSize: {
-        xxs: "0.5rem",
-        xs: "0.625rem",
-        sm: "0.75rem",
-        base: "0.875rem",
-        xl: "1rem",
-        "2xl": "1.125rem",
-        "3xl": "1.250rem",
-        "4xl": "1.375rem",
-        "5xl": "1.5rem",
+      animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
       },
     },
   },
-  plugins: [],
-};
-export default config;
+  plugins: [require("tailwindcss-animate")],
+} satisfies Config
+
+export default config

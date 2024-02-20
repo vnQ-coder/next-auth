@@ -1,19 +1,15 @@
 "use client";
-import { signOut } from "next-auth/react";
-import Button from "../Inputs/Button";
+import Breadcrumbs from "../BreadCrumb";
+import { usePathname } from "next/navigation";
+import { Card } from "@/components/ui/card";
+import { ModeToggle } from "@/components/ui/dark-mode";
 
-function Header() {
+export default function Header() {
+  const currentPath = usePathname();
   return (
-    <Button
-      onClick={() => signOut({ callbackUrl: "http://localhost:3000/en/login" })}
-      disabled={false}
-      textColor="text-fontLightPrimary"
-      type={"submit"}
-      className="w-full rounded-lg"
-    >
-      Logout
-    </Button>
+    <Card className="w-full p-4 flex items-center justify-between">
+      <Breadcrumbs currentPath={currentPath} />
+      <ModeToggle />
+    </Card>
   );
 }
-
-export default Header;
