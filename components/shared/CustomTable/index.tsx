@@ -13,11 +13,16 @@ import {
 } from "@tanstack/react-table";
 
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
-import Toolbar from "./Toolbar";
+import Toolbar from "./toolbar";
 import Pagination from "./pagination";
 import TableHeader from "./tableHeader";
 
-export default function CustomTable({ data, columns }: any) {
+export default function CustomTable({
+  data,
+  columns,
+  actions,
+  searchKey,
+}: any) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -47,7 +52,7 @@ export default function CustomTable({ data, columns }: any) {
 
   return (
     <div className="w-full">
-      <Toolbar table={table} />
+      <Toolbar table={table} actions={actions} searchKey={searchKey} />
       <div className="rounded-md border">
         <Table>
           <TableHeader table={table} />

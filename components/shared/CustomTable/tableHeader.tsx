@@ -5,7 +5,7 @@ export default function tableHeader({ table }: any) {
   return (
     <TableHeader>
       {table.getHeaderGroups().map((headerGroup: any) => (
-        <TableRow key={headerGroup.id}>
+        <TableRow key={headerGroup.id} className="bg-secondary">
           {headerGroup.headers.map((header: any) => {
             return (
               <TableHead key={header.id}>
