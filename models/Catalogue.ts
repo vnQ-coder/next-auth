@@ -1,4 +1,13 @@
 import { models, Schema, model, Document } from "mongoose";
+
+type Image = {
+  url: string;
+  name: string;
+};
+type Images = {
+  type: Image[];
+  default: [];
+};
 interface CatalogueDocument extends Document {
   name: string;
   workspaceId: string;

@@ -5,6 +5,7 @@ import { z } from "zod";
 import { fileSizeResponseHelper, fileTypeResponseHelper } from "@/utils";
 import { S3FileUploader } from "@/utils/awsHelper";
 import { fromZodError, isValidationErrorLike } from "zod-validation-error";
+import { getTemplatesByCategoryAndSubCategoryId } from "@/libs/actions/templates";
 
 export async function GET(req: NextRequest) {
   try {
@@ -74,38 +75,52 @@ export async function GET(req: NextRequest) {
 //     return NextResponse.json({ code: 500, message: "Internal Server Error" });
 //   }
 // }
+// export async function POST(req: NextRequest) {
+//   try {
+//     // console.log(req);
+//     // const { name } = await req.json();
+//     const body = await req.json();
+
+//     // if (!name) {
+//     //   return NextResponse.json({
+//     //     code: 400,
+//     //     message: "Catalogue name is required!",
+//     //   });
+//     // }
+//     const catalogue = z.object({
+//       name: z.string(),
+//     });
+//     // console.log(body, "body");
+//     const result = catalogue.parse(body);
+//     // console.log(result.errors[0].path, "result");
+//     return NextResponse.json({
+//       code: 200,
+//       message: "OK",
+//     });
+//   } catch (err) {
+//     var validationError: any = "";
+//     if (isValidationErrorLike(err)) {
+//       validationError = fromZodError(err);
+//       validationError = validationError?.toString();
+//     }
+
+//     return NextResponse.json({
+//       code: 500,
+//       message: validationError ? validationError : "Internal Server Error",
+//     });
+//   }
+// }
+
 export async function POST(req: NextRequest) {
-  try {
-    // console.log(req);
-    // const { name } = await req.json();
-    const body = await req.json();
-
-    // if (!name) {
-    //   return NextResponse.json({
-    //     code: 400,
-    //     message: "Catalogue name is required!",
-    //   });
-    // }
-    const catalogue = z.object({
-      name: z.string(),
-    });
-    // console.log(body, "body");
-    const result = catalogue.parse(body);
-    // console.log(result.errors[0].path, "result");
-    return NextResponse.json({
-      code: 200,
-      message: "OK",
-    });
-  } catch (err) {
-    var validationError: any = "";
-    if (isValidationErrorLike(err)) {
-      validationError = fromZodError(err);
-      validationError = validationError?.toString();
-    }
-
-    return NextResponse.json({
-      code: 500,
-      message: validationError ? validationError : "Internal Server Error",
-    });
-  }
+  const formData: any = await req.formData();
+  let obj = {
+    categoryId: formData.get("categoryId"),
+    subCategoryId: formData.get("subCategoryId"),
+    // id: formData.get("id"),
+    // name: formData.get("name"),
+    // subCatalogueId: formData.get("subCatalogueId"),
+    // subName: formData.get("subName"),
+    // image: formData.get("image"),
+  };
+  return NextResponse.json(await getTemplatesByCategoryAndSubCategoryId(obj));
 }
